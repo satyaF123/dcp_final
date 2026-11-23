@@ -21,8 +21,10 @@ while flag == True:
             need = "No"
         quantity = float(input("enter the quantity: "))
         unit = str(input("enter the unit: ")).strip()
+        unit = unit[0].upper() + unit[1:]
         unit_price = amount/quantity
         store = str(input("enter the store: ")).strip()
+        store = store[0].upper() + store[1:]
         discount = int(input("discount?:1 for yes , 0 for no "))
         if discount == 1:
             discount = "Yes"
@@ -31,9 +33,13 @@ while flag == True:
         df.loc[len(df)] = [item_name,category,date,"€ "+str(amount),need,quantity,unit,"€ "+str(round(unit_price,2)),store,discount]
         df.to_csv('dcp26_a00047588.csv', index=False)
     elif choice == 2:
-        row = int(input("row number to append: "))
-        print(df.iloc[row])
         flag1 = True
+        row = int(input("row number to append: "))
+        if row >= len(df):
+            print("row does not exist")
+            flag1 = False
+        else:
+            print(df.iloc[row])
         while flag1 == True:
             column = int(input("which column to append?: \n" \
             "1:item name\n" \
@@ -80,10 +86,12 @@ while flag == True:
                 df.to_csv('dcp26_a00047588.csv', index=False)
             elif column == 7:
                 unit = str(input("enter the new value")).strip()
+                unit = unit[0].upper() + unit[1:]
                 df.loc[row, "Unit"] = unit
                 df.to_csv('dcp26_a00047588.csv', index=False)
             elif column == 8:
                 store = str(input("enter the new value")).strip()
+                store = store[0].upper() + store[1:]
                 df.loc[row, "store"] = store
                 df.to_csv('dcp26_a00047588.csv', index=False)
             elif column == 9:
